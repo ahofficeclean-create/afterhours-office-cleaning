@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Office  Access Form — Afterhours Office Cleaning</title>
+<title>Office Access Form — Afterhours Office Cleaning</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -13,12 +13,10 @@
   --border: #252a38;
   --teal: #2dd4bf;
   --teal-dim: #1a3d3a;
-  --teal-glow: rgba(45,212,191,0.12);
   --text: #e4e8f0;
   --muted: #6b7591;
   --label: #9ba5bf;
   --white: #ffffff;
-  --warn: #f59e0b;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -171,13 +169,7 @@ body {
   line-height: 1.2;
 }
 .success-screen h2 em { font-style: italic; color: var(--teal); }
-.success-screen p {
-  font-size: 0.85rem;
-  color: var(--muted);
-  line-height: 1.65;
-  max-width: 300px;
-  margin: 0 auto 24px;
-}
+.success-screen p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; max-width: 300px; margin: 0 auto 12px; }
 .success-screen a { color: var(--teal); text-decoration: none; }
 .page-footer { text-align: center; padding: 20px 16px; font-size: 0.68rem; color: var(--muted); line-height: 1.7; }
 .page-footer a { color: var(--teal); text-decoration: none; }
@@ -206,7 +198,6 @@ body {
       All access information is kept strictly confidential and is only used by your assigned cleaning team. We never share your information with third parties.
     </div>
 
-    <!-- Business Info -->
     <div class="form-card">
       <div class="card-title">Business Information</div>
       <div class="field">
@@ -229,7 +220,6 @@ body {
       </div>
     </div>
 
-    <!-- Entry Instructions -->
     <div class="form-card">
       <div class="card-title">Entry Instructions</div>
       <div class="field">
@@ -250,11 +240,10 @@ body {
       </div>
       <div class="field">
         <label>Any specific entry instructions or notes</label>
-        <textarea id="entryNotes" placeholder="E.g. use the side entrance on Oak St, press # before the code, elevator is on the left..."></textarea>
+        <textarea id="entryNotes" placeholder="E.g. use the side entrance on Oak St, press # before the code..."></textarea>
       </div>
     </div>
 
-    <!-- Alarm Instructions -->
     <div class="form-card">
       <div class="card-title">Alarm / Security System</div>
       <div class="field">
@@ -275,25 +264,22 @@ body {
       </div>
     </div>
 
-    <!-- Parking -->
     <div class="form-card">
       <div class="card-title">Parking</div>
       <div class="field">
         <label>Where should our team park?</label>
-        <textarea id="parking" placeholder="E.g. park in the back lot, visitor spaces are fine after 6pm, street parking on Oak St is free after 5pm..."></textarea>
+        <textarea id="parking" placeholder="E.g. park in the back lot, visitor spaces are fine after 6pm..."></textarea>
       </div>
     </div>
 
-    <!-- Areas to Avoid -->
     <div class="form-card">
       <div class="card-title">Areas to Avoid</div>
       <div class="field">
         <label>Any areas, rooms, or items we should NOT touch?</label>
-        <textarea id="avoidAreas" placeholder="E.g. do not enter the server room, leave the CEO's desk as-is, avoid the storage room on the left..."></textarea>
+        <textarea id="avoidAreas" placeholder="E.g. do not enter the server room, leave the CEO's desk as-is..."></textarea>
       </div>
     </div>
 
-    <!-- Emergency Contact -->
     <div class="form-card">
       <div class="card-title">Emergency Contact</div>
       <p style="font-size:0.75rem;color:var(--muted);margin-bottom:14px;">Someone we can reach after hours if something unexpected comes up.</p>
@@ -318,11 +304,10 @@ body {
       </div>
     </div>
 
-    <!-- Additional Notes -->
     <div class="form-card">
       <div class="card-title">Anything Else We Should Know?</div>
       <div class="field">
-        <textarea id="additionalNotes" placeholder="E.g. the cleaning supplies are under the sink in the break room, please use the back stairwell, the trash bins are in the hallway closet..."></textarea>
+        <textarea id="additionalNotes" placeholder="E.g. cleaning supplies are under the sink in the break room, trash bins are in the hallway closet..."></textarea>
       </div>
     </div>
 
@@ -330,7 +315,6 @@ body {
 
   </div>
 
-  <!-- SUCCESS / THANK YOU -->
   <div class="success-screen" id="thankYouScreen">
     <div class="success-icon">&#x2728;</div>
     <h2>Next time you walk<br>through that door,<br><em>everything will be spotless.</em></h2>
@@ -349,10 +333,10 @@ body {
 document.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById('btn-submit').addEventListener('click', function() {
-    var bizName      = document.getElementById('bizName').value.trim();
-    var bizAddress   = document.getElementById('bizAddress').value.trim();
-    var contactName  = document.getElementById('contactName').value.trim();
-    var contactPhone = document.getElementById('contactPhone').value.trim();
+    var bizName        = document.getElementById('bizName').value.trim();
+    var bizAddress     = document.getElementById('bizAddress').value.trim();
+    var contactName    = document.getElementById('contactName').value.trim();
+    var contactPhone   = document.getElementById('contactPhone').value.trim();
     var emergencyName  = document.getElementById('emergencyName').value.trim();
     var emergencyPhone = document.getElementById('emergencyPhone').value.trim();
 
@@ -361,9 +345,44 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    document.getElementById('accessForm').style.display = 'none';
-    document.getElementById('thankYouScreen').style.display = 'block';
-    window.scrollTo(0, 0);
+    var data = {
+      access_key: '74c91cb5-6894-41ee-9619-7a1a560ccf14',
+      subject: 'New Access Form Submitted — ' + bizName,
+      from_name: 'Afterhours Office Cleaning Website',
+      business_name: bizName,
+      business_address: bizAddress,
+      contact_name: contactName,
+      contact_phone: contactPhone,
+      entry_method: document.getElementById('entryMethod').value,
+      entry_code: document.getElementById('entryCode').value,
+      entry_notes: document.getElementById('entryNotes').value,
+      alarm: document.getElementById('hasAlarm').value,
+      alarm_code: document.getElementById('alarmCode').value,
+      alarm_company: document.getElementById('alarmCompany').value,
+      parking: document.getElementById('parking').value,
+      areas_to_avoid: document.getElementById('avoidAreas').value,
+      emergency_name: emergencyName,
+      emergency_phone: emergencyPhone,
+      emergency_relation: document.getElementById('emergencyRelation').value,
+      additional_notes: document.getElementById('additionalNotes').value
+    };
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(res) { return res.json(); })
+    .then(function() {
+      document.getElementById('accessForm').style.display = 'none';
+      document.getElementById('thankYouScreen').style.display = 'block';
+      window.scrollTo(0, 0);
+    })
+    .catch(function() {
+      document.getElementById('accessForm').style.display = 'none';
+      document.getElementById('thankYouScreen').style.display = 'block';
+      window.scrollTo(0, 0);
+    });
   });
 
 });
