@@ -235,9 +235,9 @@ body { background: var(--night); color: var(--text); font-family: 'Outfit', sans
             <select id="sqft">
               <option value="1000">Under 1,000 sq ft</option>
               <option value="2000" selected>1,000 - 2,500 sq ft</option>
-              <option value="3500">2,500 - 5,000 sq ft</option>
-              <option value="6000">5,000 - 8,000 sq ft</option>
-              <option value="10000">8,000+ sq ft</option>
+              <option value="3500">2,500 - 3,000 sq ft</option>
+              <option value="6000">3,000 - 5,000 sq ft</option>
+              <option value="10000">5,000+ sq ft</option>
             </select>
           </div>
           <div class="field">
@@ -443,8 +443,9 @@ body { background: var(--night); color: var(--text); font-family: 'Outfit', sans
 </div>
 
 <script>
-var SQFT_RATES = {1000:99, 2000:165, 3500:264, 6000:396, 10000:528};
-var FREQ_DISCOUNT = {'1':1,'22':0.75,'8':0.82,'4':0.88,'2':0.94,'1m':1};
+// UPDATED PRICING - April 2026
+var SQFT_RATES = {1000:140, 2000:215, 3500:330, 6000:'contact', 10000:'contact'};
+var FREQ_DISCOUNT = {'1':1,'22':0.88,'8':0.92,'4':0.95,'2':0.97,'1m':1};
 var FREQ_LABEL = {'1':'one-time','22':'5x/week','8':'2x/week','4':'weekly','2':'bi-weekly','1m':'monthly'};
 var FREQ_MONTHLY = {'22':22,'8':8,'4':4,'2':2,'1m':1};
 var TOILET_EXTRA = {0:0,1:15,2:30,3:45,4:60};
@@ -533,8 +534,21 @@ function calcQuote() {
   } else {
     var sqft = parseInt(document.getElementById('sqft').value);
     var freq = document.getElementById('frequency').value;
+    var base = SQFT_RATES[sqft];
+
+    // Handle contact us tiers
+    if (base === 'contact') {
+      document.getElementById('qPrice').textContent = 'Contact Us';
+      document.getElementById('qPer').textContent = 'for a custom quote on larger spaces';
+      document.getElementById('qMonthly').textContent = '';
+      items.innerHTML = '';
+      addItem('Space size requires a custom quote', '');
+      addItem('Call or email us for pricing', '📞');
+      document.getElementById('quoteResult').style.display = 'block';
+      return;
+    }
+
     var toiletExtra = TOILET_EXTRA[parseInt(document.getElementById('toilets').value)] || 0;
-    var base = SQFT_RATES[sqft] || 165;
     var addons = 0;
     ['svc-kitchen','svc-microwave','svc-windows','svc-supply'].forEach(function(id) {
       var el = document.getElementById(id);
